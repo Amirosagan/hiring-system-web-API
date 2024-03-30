@@ -1,6 +1,10 @@
 @HiringSystem.Api_HostAddress = http://localhost:5054
 
-GET {{HiringSystem.Api_HostAddress}}/weatherforecast/
+GET {{HiringSystem.Api_HostAddress}}/api/auth/login
 Accept: application/json
+Content-Type: application/json
 
-###
+{
+  "Email": "amir@gmail.com",
+  "Password": "pass"
+}
