@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HiringSystem.Application\HiringSystem.Application.csproj" />
     <ProjectReference Include="..\HiringSystem.Contracts\HiringSystem.Contracts.csproj" />
+    <ProjectReference Include="..\HiringSystem.Infrastructure\HiringSystem.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
