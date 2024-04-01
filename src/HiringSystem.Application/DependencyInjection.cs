@@ -1,4 +1,5 @@
 using HiringSystem.Application.Authentication;
+using HiringSystem.Application.Common.Interfaces.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HiringSystem.Application;

@@ -29,7 +29,7 @@ namespace HiringSystem.Api.Contollers
             return Ok(response);
         }
         [Route("login")]
-        [HttpGet]
+        [HttpPost]
         public  async Task<IActionResult> Login( LoginRequestDto request)
         {
             var authResponse = await _authenticationService.Login(request.Email, request.Password);

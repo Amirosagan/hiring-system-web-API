@@ -1,16 +1,19 @@
+using HiringSystem.Api.Filters;
+using HiringSystem.Api.Middleware;
 using HiringSystem.Application;
-using HiringSystem.Application.Authentication;
 using HiringSystem.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure();
+    .AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(e => e.Filters.Add())();
 
 var app = builder.Build();
+
+// app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
