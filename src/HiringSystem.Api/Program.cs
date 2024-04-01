@@ -9,7 +9,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers(e => e.Filters.Add())();
+builder.Services.AddControllers(e => e.Filters.Add<ErrorHandlingFilterAttribute>());
 
 var app = builder.Build();
 

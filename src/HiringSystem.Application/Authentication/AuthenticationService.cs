@@ -1,3 +1,4 @@
+using HiringSystem.Application.Common.Errors;
 using HiringSystem.Application.Common.Interfaces.Authentication;
 using HiringSystem.Application.Common.Interfaces.Persistence;
 using HiringSystem.Domain.Entities;
@@ -18,7 +19,7 @@ public class AuthenticationService : IAuthenticationService
     {
         if (_userRepository.GetUserByEmail(email) != null)
         {
-            throw new Exception("User already exists");
+            throw new DuplicateEmailException();
         }
         
         var user = new User
