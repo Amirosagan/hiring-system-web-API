@@ -1,6 +1,7 @@
-using HiringSystem.Application.Common.Errors;
 using HiringSystem.Application.Common.Interfaces.Authentication;
 using HiringSystem.Application.Common.Interfaces.Persistence;
+using HiringSystem.Domain.Common.Errors;
+using ErrorOr;
 using HiringSystem.Domain.Entities;
 
 namespace HiringSystem.Application.Authentication;
@@ -15,11 +16,11 @@ public class AuthenticationService : IAuthenticationService
         _jwtTokenGenerator = jwtTokenGenerator;
         _userRepository = userRepository;
     }
-    public Task<AuthenticationResponse> Register(string name, string email, string password)
+    public ErrorOr<Task<AuthenticationResponse>> Register(string name, string email, string password)
     {
         if (_userRepository.GetUserByEmail(email) != null)
         {
-            throw new DuplicateEmailException();
+            return Errors.User.DuplicateEmail(email);
         }
         
         var user = new User
@@ -37,11 +38,11 @@ public class AuthenticationService : IAuthenticationService
         return Task.FromResult(new AuthenticationResponse(user.Id, token));
     }
 
-    public Task<AuthenticationResponse> Login(string email, string password)
+    public ErrorOr<Task<AuthenticationResponse>> Login(string email, string password)
     {
         if (_userRepository.GetUserByEmail(email) == null)
         {
-            throw new Exception("User does not exist");
+            return Errors.User.NotFound(email);
         }
         
         var user = _userRepository.GetUserByEmail(email);
