@@ -1,5 +1,3 @@
-using HiringSystem.Application.Authentication;
-using HiringSystem.Application.Common.Interfaces.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HiringSystem.Application;
@@ -8,7 +6,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
         return services;
     }
 }

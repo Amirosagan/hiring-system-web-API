@@ -1,5 +1,8 @@
-using HiringSystem.Application.Authentication;
+using HiringSystem.Application.Authentication.Commands.Register;
+using HiringSystem.Application.Authentication.Queries.Login;
 using HiringSystem.Contracts.Authentication;
+using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HiringSystem.Api.Controllers
@@ -8,27 +11,26 @@ namespace HiringSystem.Api.Controllers
     [ApiController]
     public class AuthenticationController : ErrorApiController
     {
-        private readonly IAuthenticationService _authenticationService;
-
-        public AuthenticationController(IAuthenticationService authenticationService)
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        public AuthenticationController( IMediator mediator, IMapper mapper)
         {
-            _authenticationService = authenticationService;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [Route("register")]
         [HttpPost]
-        public IActionResult Register( UserRegisterRequestDto request)
+        public async Task<IActionResult> Register( UserRegisterRequestDto request)
         {
-            var authResponse = _authenticationService.Register(request.Name, request.Email, request.Password);
+            var command = _mapper.Map<RegisterCommand>(request);
+            
+            var authResponse = await _mediator.Send(command);
             
             return authResponse.Match<IActionResult>(
                 success =>
-                {  
-                    var result = success.Result;
-                    var response = new AuthenticationResponseDto(
-                        result.Id,
-                        result.Token
-                    );
+                {
+                    var response = _mapper.Map<AuthenticationResponseDto>(success);
                     
                     return Ok(response);
                 },
@@ -38,18 +40,15 @@ namespace HiringSystem.Api.Controllers
         }
         [Route("login")]
         [HttpPost]
-        public  IActionResult Login( LoginRequestDto request)
+        public async Task<IActionResult> Login(LoginRequestDto request)
         {
-            var authResponse = _authenticationService.Login(request.Email, request.Password);
+            var query = _mapper.Map<LoginQuery>(request);
+            var authResponse = await _mediator.Send(query);
             
             return authResponse.Match<IActionResult>(
                 success =>
                 {
-                    var result = success.Result;
-                    var response = new AuthenticationResponseDto(
-                        result.Id,
-                        result.Token
-                    );
+                    var response = _mapper.Map<AuthenticationResponseDto>(success);
                     
                     return Ok(response);
                 },

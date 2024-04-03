@@ -1,19 +1,13 @@
-using HiringSystem.Api.Errors;
-using HiringSystem.Api.Filters;
-using HiringSystem.Api.Middleware;
+using HiringSystem.Api;
 using HiringSystem.Application;
 using HiringSystem.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddPresentation()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
-
-builder.Services.AddControllers();
-
-builder.Services.AddSingleton<ProblemDetailsFactory, SystemProblemDetailsFactory>();
 
 var app = builder.Build();
 

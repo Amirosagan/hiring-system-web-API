@@ -1,4 +1,4 @@
-namespace HiringSystem.Application.Authentication;
+namespace HiringSystem.Application.Authentication.Common;
 
 public record AuthenticationResponse(
     Guid Id,

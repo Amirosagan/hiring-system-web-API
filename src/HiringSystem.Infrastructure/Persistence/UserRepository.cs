@@ -5,14 +5,14 @@ namespace HiringSystem.Infrastructure.Persistence;
 
 public class UserRepository : IUserRepository
 {
-    private static readonly List<User> Users = []; 
+    private readonly List<User> _users = []; 
     public User? GetUserByEmail(string email)
     {
-        return Users.FirstOrDefault(u => u.Email == email);
+        return _users.FirstOrDefault(u => u.Email == email);
     }
 
     public void AddUser(User user)
     {
-        Users.Add(user);
+        _users.Add(user);
     }
 }
