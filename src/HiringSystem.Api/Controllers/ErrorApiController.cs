@@ -1,5 +1,6 @@
 using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HiringSystem.Api.Controllers;
 
@@ -8,6 +9,19 @@ public class ErrorApiController : ControllerBase
 {
     protected IActionResult Problem(List<Error> errors)
     {
+        if (errors.All(x => x.Type == ErrorType.Validation))
+        {
+            var validationErrors = new ModelStateDictionary();
+            foreach (var error in errors)
+            {
+                validationErrors.AddModelError(error.Code, error.Description);
+            }
+
+            return ValidationProblem(title:"Validation Error", modelStateDictionary:validationErrors);
+        }
+        
+        HttpContext.Items["Errors"] = errors;
+        
         var firstError = errors.First();
 
         var statusCode = firstError.Type switch

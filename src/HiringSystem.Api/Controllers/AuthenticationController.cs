@@ -3,12 +3,14 @@ using HiringSystem.Application.Authentication.Queries.Login;
 using HiringSystem.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HiringSystem.Api.Controllers
 {
     [Route("api/auth")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : ErrorApiController
     {
         private readonly IMediator _mediator;
