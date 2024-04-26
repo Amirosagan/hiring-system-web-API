@@ -1,9 +1,20 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace HiringSystem.Domain.Common.Models;
 
-public class AggregateRoot<TId> : Entity<TId>
-    where TId : notnull
+public abstract class AggregateRoot<TId, TIdType> : Entity<TId>
+    where TId : AggregateRootId<TIdType>
+    where TIdType : notnull
 {
-    protected  AggregateRoot(TId id) : base(id)
-    { }
+    // [Column(TypeName = "char(36)")]
+    public new AggregateRootId<TIdType> Id { get; protected set; }
+
+    protected AggregateRoot(TId id) 
+    {
+        Id = id;
+    }
+    
+    protected AggregateRoot()
+    {}
     
 }

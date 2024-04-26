@@ -6,6 +6,7 @@ using HiringSystem.Infrastructure.Authentication;
 using HiringSystem.Infrastructure.Persistence;
 using HiringSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -35,9 +36,13 @@ public static class DependencyInjection
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
             });
+        services.AddDbContext<HiringSystemDbContext>(option => option.UseSqlite("Data Source=../../local.db"));
         
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddTransient<ITalentRepository, TalentRepository>();
+        services.AddTransient<IJobRepository, JobRepository>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
         return services;
     }
 }

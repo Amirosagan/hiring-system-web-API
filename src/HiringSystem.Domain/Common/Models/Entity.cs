@@ -39,4 +39,7 @@ public class Entity<TId> : IEquatable<Entity<TId>>
     {
         return Id.GetHashCode();
     }
+
+    protected Entity()
+    { }
 }

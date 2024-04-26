@@ -10,4 +10,8 @@
     <PackageReference Include="ErrorOr" Version="2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Talent\Entities\" />
+  </ItemGroup>
+
 </Project>

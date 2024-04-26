@@ -8,5 +8,6 @@ public static class Errors
     {
         public static Error DuplicateEmail(string email) => Error.Conflict("User.DuplicateEmail", $"User with email {email} already exists");
         public static Error NotFound(string email) => Error.Validation("User.Validation", $"Email or password is incorrect");
+        public static Error InvalidPassword() => Error.Validation("User.Validation", "Email or password is incorrect");
     }
 }
