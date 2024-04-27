@@ -41,7 +41,9 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IUserRepository, UserRepository>();
         services.AddTransient<ITalentRepository, TalentRepository>();
+        services.AddTransient<IApplicationRepository, ApplicationRepository>();
         services.AddTransient<IJobRepository, JobRepository>();
+        services.AddTransient<IJobSeekerRepository, JobSeekerRepository>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         return services;
     }

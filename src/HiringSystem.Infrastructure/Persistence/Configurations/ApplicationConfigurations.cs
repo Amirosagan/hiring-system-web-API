@@ -14,18 +14,6 @@ public class ApplicationConfigurations : IEntityTypeConfiguration<Domain.Applica
     {
         builder.ToTable("Applications");
         builder.HasKey(a => a.Id);
-
-        builder.Property(a => a.Id)
-            .HasConversion(
-                id => id.Value,
-                id => Domain.Application.ValueObjects.ApplicationId.Create()
-            );
-
-        builder.Property(a => a.JobId)
-            .HasConversion(
-                id => id.Value,
-                id => Domain.Job.ValueObjects.JobId.Create()
-            );
         
         builder.Property(a => a.Resume)
             .HasMaxLength(500)

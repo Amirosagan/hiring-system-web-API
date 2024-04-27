@@ -2,8 +2,8 @@ using System.Linq.Expressions;
 
 using ErrorOr;
 
-using HiringSystem.Application.Common.Helper;
 using HiringSystem.Application.Common.Interfaces.Persistence;
+using HiringSystem.Application.Jobs.Common;
 using HiringSystem.Domain.Job;
 using HiringSystem.Domain.Job.ValueObjects;
 using HiringSystem.Domain.Talent;

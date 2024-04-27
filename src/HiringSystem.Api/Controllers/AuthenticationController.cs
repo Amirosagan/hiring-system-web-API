@@ -1,5 +1,7 @@
-using HiringSystem.Application.Authentication.Commands.Register;
-using HiringSystem.Application.Authentication.Queries.Login;
+using HiringSystem.Application.Authentication.Commands.JobSeekerRegister;
+using HiringSystem.Application.Authentication.Commands.TalentRegister;
+using HiringSystem.Application.Authentication.Queries.JobSeekerLogin;
+using HiringSystem.Application.Authentication.Queries.TalentLogin;
 using HiringSystem.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
@@ -21,11 +23,11 @@ namespace HiringSystem.Api.Controllers
             _mapper = mapper;
         }
 
-        [Route("register")]
+        [Route("Talent/register")]
         [HttpPost]
-        public async Task<IActionResult> Register( UserRegisterRequestDto request)
+        public async Task<IActionResult> Register( TalentRegisterRequestDto request)
         {
-            var command = _mapper.Map<RegisterCommand>(request);
+            var command = _mapper.Map<TalentRegisterCommand>(request);
             
             var authResponse = await _mediator.Send(command);
             
@@ -40,11 +42,11 @@ namespace HiringSystem.Api.Controllers
             );
 
         }
-        [Route("login")]
+        [Route("Talent/login")]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequestDto request)
+        public async Task<IActionResult> TalentLogin(LoginRequestDto request)
         {
-            var query = _mapper.Map<LoginQuery>(request);
+            var query = _mapper.Map<TalentLoginQuery>(request);
             var authResponse = await _mediator.Send(query);
             
             return authResponse.Match<IActionResult>(
@@ -57,6 +59,44 @@ namespace HiringSystem.Api.Controllers
                 Problem
             );
 
+        }
+        
+        [Route("JobSeeker/register")]
+        [HttpPost]
+        public async Task<IActionResult> Register(JobSeekerRegisterRequest request)
+        {
+            var command = _mapper.Map<JobSeekerRegisterCommand>(request);
+            
+            var authResponse = await _mediator.Send(command);
+            
+            return authResponse.Match<IActionResult>(
+                success =>
+                {
+                    var response = _mapper.Map<AuthenticationResponseDto>(success);
+                    
+                    return Ok(response);
+                },
+                Problem
+            );
+
+        }
+
+        [Route("JobSeeker/login")]
+        [HttpPost]
+        public async Task<IActionResult> JobSeekerLogin(LoginRequestDto request)
+        {
+            var query = _mapper.Map<JobSeekerLoginQuery>(request);
+            var authResponse = await _mediator.Send(query);
+
+            return authResponse.Match<IActionResult>(
+                success =>
+                {
+                    var response = _mapper.Map<AuthenticationResponseDto>(success);
+
+                    return Ok(response);
+                },
+                Problem
+            );
         }
     }
 }

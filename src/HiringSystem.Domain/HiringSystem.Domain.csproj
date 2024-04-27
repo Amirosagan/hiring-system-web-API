@@ -11,7 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\ValueObjects\" />
+    <Folder Include="JobSeeker\ValueObjects\" />
     <Folder Include="Talent\Entities\" />
+    <Folder Include="Talent\ValueObjects\" />
   </ItemGroup>
 
 </Project>

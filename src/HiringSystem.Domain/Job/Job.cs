@@ -1,15 +1,13 @@
 using HiringSystem.Domain.Common.Enums;
 using HiringSystem.Domain.Common.Models;
 using HiringSystem.Domain.Job.ValueObjects;
-using HiringSystem.Domain.Talent.ValueObjects;
 
-using ApplicationId = HiringSystem.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HiringSystem.Domain.Job;
 
-public sealed class Job : AggregateRoot<JobId, Guid>
+public sealed class Job : AggregateRoot<Guid>
 {
-    public AggregateRootId<Guid> TalentId { get; private set; }
+    public Guid TalentId { get; private set; }
     public Talent.Talent Talent { get; private set; }
     public string Title{ get; private set; }
     public string Details { get; private set; }
@@ -23,7 +21,7 @@ public sealed class Job : AggregateRoot<JobId, Guid>
 
     public IReadOnlyList<Application.Application>? Applications { get; private set; }
 
-    public Job(JobId id, TalentId talentId, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, DateTime createdAt, string talentJobUrl, Talent.Talent talent) : base(id)
+    public Job(Guid id, Guid talentId, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, DateTime createdAt, string talentJobUrl, Talent.Talent talent) : base(id)
     {
         TalentId = talentId;
         Title = title;
@@ -38,9 +36,9 @@ public sealed class Job : AggregateRoot<JobId, Guid>
         Applications = [];
     }
     
-    public static Job Create(TalentId talentId, Talent.Talent talent, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, string talentJobUrl)
+    public static Job Create(Guid talentId, Talent.Talent talent, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, string talentJobUrl)
     {
-        return new Job(JobId.Create(), talentId, title, details, jobType, workPlace, country, salary, DateTime.Now, talentJobUrl, talent);
+        return new Job(Guid.NewGuid(), talentId, title, details, jobType, workPlace, country, salary, DateTime.Now, talentJobUrl, talent);
     }
     #pragma warning disable CS8618
     private Job()

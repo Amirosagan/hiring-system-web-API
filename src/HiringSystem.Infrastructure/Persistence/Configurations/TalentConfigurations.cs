@@ -1,5 +1,4 @@
 using HiringSystem.Domain.Talent;
-using HiringSystem.Domain.Talent.ValueObjects;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,11 +17,6 @@ public class TalentConfigurations : IEntityTypeConfiguration<Talent>
         builder.ToTable("Talents");
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Id)
-            .HasConversion(
-                id => id.Value,
-                id => TalentId.Create()
-            );
         builder.Property(t => t.Name)
             .HasMaxLength(100)
             .IsRequired();

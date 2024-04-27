@@ -7,6 +7,8 @@ public interface IJobRepository
     void AddJob(Job job);
     
     IQueryable<Job> GetJobsQueryable();
-    
+
+    Job GetJobById(string requestJobId);
+    bool JobExists(string jobId);
 }
     

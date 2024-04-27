@@ -21,7 +21,7 @@ public class PasswordHasher : IPasswordHasher
         var salt = RandomNumberGenerator.GetBytes(SaltSize);
         var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, HashAlgorithmName, KeySize);
 
-        Console.WriteLine($"{Convert.ToBase64String(salt)}{Delimiter}{Convert.ToBase64String(hash)}");
+        // Console.WriteLine($"{Convert.ToBase64String(salt)}{Delimiter}{Convert.ToBase64String(hash)}");
 
         return $"{Convert.ToBase64String(salt)}{Delimiter}{Convert.ToBase64String(hash)}";
     }

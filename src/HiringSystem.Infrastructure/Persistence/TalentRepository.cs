@@ -28,9 +28,26 @@ public class TalentRepository  : ITalentRepository
         _dbContext.Talents.Remove(talent);
         _dbContext.SaveChanges();
     }
-    
+
+    public Talent? GetTalent(string talentId)
+    {
+        var queryTalentId = Guid.Parse(talentId);
+        return _dbContext.Talents.FirstOrDefault(t => t.Id == queryTalentId)!;
+    }
+
+    public Talent? GetTalentByEmail(string email)
+    {
+        return _dbContext.Talents.FirstOrDefault(t => t.Email == email);
+    }
+
     public bool Exists(string email)
     {
         return _dbContext.Talents.Any(t => t.Email == email);
+    }
+
+    public bool ExistsWithId(string talentId)
+    {
+        var queryTalentId = Guid.Parse(talentId);
+        return _dbContext.Talents.Any(t=>t.Id == queryTalentId);
     }
 }

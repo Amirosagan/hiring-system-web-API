@@ -1,4 +1,3 @@
-using HiringSystem.Application.Common.Helper;
 using HiringSystem.Domain.Job.ValueObjects;
 
 namespace HiringSystem.Application.Jobs.Queries.GetJobs;

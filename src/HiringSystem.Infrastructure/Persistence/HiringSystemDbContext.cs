@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
 
 using HiringSystem.Domain.Job;
+using HiringSystem.Domain.JobSeeker;
 using HiringSystem.Domain.Talent;
-using HiringSystem.Infrastructure.Common.Converters;
-using HiringSystem.Infrastructure.Common.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +14,10 @@ public class HiringSystemDbContext : DbContext
     {
     }
 
-    public DbSet<Domain.Application.Application> Applications { get; set; } = null!;
+    public DbSet<Domain.Application.Application?> Applications { get; set; } = null!;
     public DbSet<Job> Jobs { get; set; } = null!;
     public DbSet<Talent> Talents { get; set; } = null!;
+    public DbSet<JobSeeker> JobSeekers{ get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

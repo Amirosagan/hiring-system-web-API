@@ -1,6 +1,6 @@
 using ErrorOr;
 
-using HiringSystem.Application.Common.Helper;
+using HiringSystem.Application.Jobs.Common;
 using HiringSystem.Domain.Common.Enums;
 
 using MediatR;

@@ -1,4 +1,3 @@
-using HiringSystem.Application.Authentication.Commands.Register;
 using HiringSystem.Application.Authentication.Common;
 using MediatR;
 using ErrorOr;

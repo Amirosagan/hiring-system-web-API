@@ -1,10 +1,7 @@
 using HiringSystem.Domain.Job;
-using HiringSystem.Domain.Job.ValueObjects;
-using HiringSystem.Domain.Talent.ValueObjects;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using HiringSystem.Domain.Application;
 
 namespace HiringSystem.Infrastructure.Persistence.Configurations;
 
@@ -21,12 +18,6 @@ public class JobConfigurations : IEntityTypeConfiguration<Job>
         
         builder.HasKey(j => j.Id);
 
-        builder.Property(j => j.Id)
-            .HasConversion(
-                id => id.Value,
-                id => JobId.Create()
-            );
-        
         builder.Property(j => j.Title)
             .HasMaxLength(100)
             .IsRequired();
@@ -34,12 +25,6 @@ public class JobConfigurations : IEntityTypeConfiguration<Job>
         builder.Property(j => j.Details)
             .HasMaxLength(5000)
             .IsRequired();
-
-        builder.Property(j => j.TalentId)
-            .HasConversion(
-                id => id.Value,
-                id => TalentId.Create()
-            );
 
         builder.Property(j => j.TalentJobUrl)
             .HasMaxLength(200);
@@ -55,13 +40,13 @@ public class JobConfigurations : IEntityTypeConfiguration<Job>
             .IsRequired()
             .HasMaxLength(20);
 
-        builder.OwnsOne(j => j.Salary,e=> 
-        { });
+        builder.ComplexProperty(j => j.Salary);
         
         builder.HasMany(e => e.Applications)
             .WithOne(a=>a.Job)
             .HasForeignKey(a=>a.JobId)
-            .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(e => e.Talent)
             .WithMany(e => e.Jobs)

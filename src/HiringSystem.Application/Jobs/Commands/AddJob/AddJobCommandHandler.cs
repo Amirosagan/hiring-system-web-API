@@ -2,9 +2,8 @@ using HiringSystem.Domain.Job;
 using ErrorOr;
 
 using HiringSystem.Application.Common.Interfaces.Persistence;
+using HiringSystem.Domain.Common.Errors;
 using HiringSystem.Domain.Job.ValueObjects;
-using HiringSystem.Domain.Talent;
-using HiringSystem.Domain.Talent.ValueObjects;
 
 using MediatR;
 
@@ -23,9 +22,16 @@ public class AddJobCommandHandler : IRequestHandler<AddJobCommand, ErrorOr<Job>>
     
     public Task<ErrorOr<Job>> Handle(AddJobCommand request, CancellationToken cancellationToken)
     {
+        var talent = _talentRepository.GetTalent(request.TalentId);
+        
+        if (ReferenceEquals(talent, null))
+        {
+            return Task.FromResult<ErrorOr<Job>>(Errors.Job.TalentNotFound(request.TalentId));
+        }
+
         var job = Job.Create(
-            talent: Talent.Create("asdfasdf", "asdfasdfa", "asdfasdfasdf", "asdfasdfasd", "asdfasdfasd", "asdfasdfa"),
-            talentId: TalentId.Create(),
+            talent: talent,
+            talentId: talent.Id,
             title: request.Title,
             details: request.Description,
             jobType: request.JobType,
