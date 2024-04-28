@@ -5,13 +5,9 @@ COPY ["src/HiringSystem.Application/HiringSystem.Application.csproj", "HiringSys
 COPY ["src/HiringSystem.Domain/HiringSystem.Domain.csproj", "HiringSystem.Domain/"]
 COPY ["src/HiringSystem.Contracts/HiringSystem.Contracts.csproj", "HiringSystem.Contracts/"]
 COPY ["src/HiringSystem.Infrastructure/HiringSystem.Infrastructure.csproj", "HiringSystem.Infrastructure/"]
-COPY ["Directory.Packages.props", "./"]
-COPY ["Directory.Build.props", "./"]
 RUN dotnet restore "HiringSystem.Api/HiringSystem.Api.csproj"
-RUN dotnet tool restore "HiringSystem.Api/HiringSystem.Api.csproj"
-RUN dotnet ef database update --project HiringSystem.Infrastructure/HiringSystem.Infrastructure.csproj --startup-project HiringSystem.Api/HiringSystem.Api.csproj
 COPY . ../
-WORKDIR /src/CleanArchitecture.Api
+WORKDIR /src/HiringSystem.Api
 RUN dotnet build "HiringSystem.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -22,7 +18,4 @@ ENV ASPNETCORE_HTTP_PORTS=5001
 EXPOSE 5001
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN apt-get -y update
-RUN apt-get-y upgrade
-RUN  apt-get install -y sqlite3 libsqlite3-dev
 ENTRYPOINT ["dotnet", "HiringSystem.Api.dll"]

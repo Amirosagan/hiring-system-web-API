@@ -44,7 +44,7 @@ public static class DependencyInjection
                 ValidAudience = jwtSettings.Audience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
             });
-        services.AddDbContext<HiringSystemDbContext>(option => option.UseSqlite("Data Source=../../local.db"));
+        services.AddDbContext<HiringSystemDbContext>(option => option.UseSqlite("Data Source=HiringSystem.db"));
         
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IUserRepository, UserRepository>();
