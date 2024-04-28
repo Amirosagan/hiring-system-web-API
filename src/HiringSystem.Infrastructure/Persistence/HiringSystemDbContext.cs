@@ -14,7 +14,7 @@ public class HiringSystemDbContext : DbContext
     {
     }
 
-    public DbSet<Domain.Application.Application?> Applications { get; set; } = null!;
+    public DbSet<Domain.Application.Application> Applications { get; set; } = null!;
     public DbSet<Job> Jobs { get; set; } = null!;
     public DbSet<Talent> Talents { get; set; } = null!;
     public DbSet<JobSeeker> JobSeekers{ get; set; } = null!;

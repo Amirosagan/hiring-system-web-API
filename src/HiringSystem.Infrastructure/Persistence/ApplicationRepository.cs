@@ -35,4 +35,10 @@ public class ApplicationRepository : IApplicationRepository
             .Where(a => a.JobId == Guid.Parse(jobId))
             .ToListAsync();
     }
+
+    public IQueryable<Domain.Application.Application> GetApplicationWithJobIdQuery(string jobId)
+    {
+        return _context.Applications
+            .Where(a => a.JobId == Guid.Parse(jobId));
+    }
 }

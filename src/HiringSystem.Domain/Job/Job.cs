@@ -21,7 +21,7 @@ public sealed class Job : AggregateRoot<Guid>
 
     public IReadOnlyList<Application.Application>? Applications { get; private set; }
 
-    public Job(Guid id, Guid talentId, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, DateTime createdAt, string talentJobUrl, Talent.Talent talent) : base(id)
+    private Job(Guid id, Guid talentId, string title, string details, JobType jobType, WorkPlace workPlace, string country, Salary salary, DateTime createdAt, string talentJobUrl, Talent.Talent talent) : base(id)
     {
         TalentId = talentId;
         Title = title;

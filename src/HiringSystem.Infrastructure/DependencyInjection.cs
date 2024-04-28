@@ -2,9 +2,12 @@ using System.Text;
 using HiringSystem.Application.Common.Interfaces.Authentication;
 using HiringSystem.Application.Common.Interfaces.Persistence;
 using HiringSystem.Application.Common.Interfaces.Services;
+using HiringSystem.Application.Common.Interfaces.Storage;
 using HiringSystem.Infrastructure.Authentication;
 using HiringSystem.Infrastructure.Persistence;
 using HiringSystem.Infrastructure.Services;
+using HiringSystem.Infrastructure.Storage;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,11 +22,16 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettings = new JwtSettings();
+        var dropboxSettings = new DropboxSettings();
         
         configuration.GetSection("Jwt").Bind(jwtSettings);
+        configuration.GetSection("Dropbox").Bind(dropboxSettings);
+        
         services.AddSingleton(Options.Create(jwtSettings));
+        services.AddSingleton(Options.Create(dropboxSettings));
         
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddSingleton<IDropbox, Storage.Dropbox>();
 
         services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.TokenValidationParameters  = new TokenValidationParameters()

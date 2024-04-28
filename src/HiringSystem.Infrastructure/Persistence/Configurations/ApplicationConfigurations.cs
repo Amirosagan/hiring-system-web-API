@@ -22,6 +22,5 @@ public class ApplicationConfigurations : IEntityTypeConfiguration<Domain.Applica
         builder.Property(a => a.Supportive)
             .HasMaxLength(5000);
         
-        
     }
 }

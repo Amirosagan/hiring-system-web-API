@@ -9,6 +9,7 @@ public class JobSeekerConfigurations : IEntityTypeConfiguration<JobSeeker>
 {
     public void Configure(EntityTypeBuilder<JobSeeker> builder)
     {
+        builder.ToTable("JobSeekers");
         builder.HasKey(j => j.Id);
         
         builder.Property(j => j.Email).IsRequired();
@@ -19,8 +20,16 @@ public class JobSeekerConfigurations : IEntityTypeConfiguration<JobSeeker>
             .HasMaxLength(40);
         builder.Property(j => j.ProfilePicture)
             .HasMaxLength(100);
-
+ 
+        builder.HasMany(e => e.Applications)
+            .WithOne(e => e.JobSeeker)
+            .HasForeignKey(e => e.JobSeekerId)
+            .OnDelete(DeleteBehavior.Cascade);       
+        
         builder.HasIndex(j => j.Email)
             .IsUnique();
+
+        
+        builder.Metadata.FindNavigation(nameof(JobSeeker.Applications))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

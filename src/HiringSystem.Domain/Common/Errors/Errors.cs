@@ -15,6 +15,7 @@ public static class Errors
         public static Error JobNotFound(string jobId) => Error.NotFound("Job.NotFound", $"Job with id {jobId} not found");
         public static Error JobAlreadyExists(string jobId) => Error.Conflict("Job.AlreadyExists", $"Job with id {jobId} already exists");
         public static Error TalentNotFound(string talentId) => Error.NotFound("Talent.NotFound", $"Talent with id {talentId} not found");
+        public static Error JobNotOwnedByTalent(string jobId, string talentId) => Error.Forbidden("Job.NotOwnedByTalent", $"Job with id {jobId} is not owned by talent with id {talentId}");
     }
 
     public static class Application
@@ -22,6 +23,7 @@ public static class Errors
         public static Error ApplicationNotFound(string applicationId) => Error.NotFound("Application.NotFound", $"Application with id {applicationId} not found");
         public static Error ApplicationAlreadyExists(string applicationId) => Error.Conflict("Application.AlreadyExists", $"Application with id {applicationId} already exists");
         public static Error JobSeekerNotFound(string jobSeekerId) => Error.NotFound("JobSeeker.NotFound", $"JobSeeker with id {jobSeekerId} not found");
+        public static Error ResumeNotFound() => Error.Validation("Resume.Validation", "Resume is required");
         
     }
 }

@@ -6,4 +6,5 @@ public interface IApplicationRepository
     public void Add(Domain.Application.Application application);
     public Task<List<Domain.Application.Application>> GetApplicationsAsync();
     public Task<List<Domain.Application.Application>> GetApplicationsWithJobIdAsync(string jobId);
+    public IQueryable<Domain.Application.Application> GetApplicationWithJobIdQuery(string jobId);
 }
